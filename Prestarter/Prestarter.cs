@@ -75,7 +75,7 @@ namespace Prestarter
             {
                 if (javaStatus == JavaStatus.NeedUpdate)
                 {
-                    var dialog = MessageBox.Show("Доступно обновление Java. Обновить?", "Prestarter", MessageBoxButtons.YesNoCancel);
+                    var dialog = MessageBox.Show("Доступно обновление Java. Обновить?", Config.Title, MessageBoxButtons.YesNoCancel);
                     if (dialog == DialogResult.No)
                     {
                         return javaPath;
@@ -88,7 +88,7 @@ namespace Prestarter
                 else
                 {
                     var dialog = MessageBox.Show($"Для запуска лаунчера {Config.Project} необходимо программное обеспечение Java. Скачать {Config.JavaDownloader.GetName()}?", 
-                        "Prestarter", MessageBoxButtons.OKCancel);
+                        Config.Title, MessageBoxButtons.OKCancel);
                     if (dialog != DialogResult.OK)
                     {
                         return null;
