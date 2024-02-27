@@ -17,6 +17,7 @@ namespace Prestarter
             InitializeComponent();
             WindowState = FormWindowState.Minimized;
             ShowInTaskbar = false;
+            Text = Config.Title;
         }
 
         private void PreStartedForm_MouseUp(object sender, MouseEventArgs e)
@@ -39,11 +40,6 @@ namespace Prestarter
             dragging = true;
             dragCursorPoint = Cursor.Position;
             dragFormPoint = Location;
-        }
-
-        private void buttonExit_Click(object sender, EventArgs e)
-        {
-            Environment.Exit(1);
         }
 
         public void SetProgressBarState(ProgressBarState state)
@@ -99,6 +95,12 @@ namespace Prestarter
 
                 Environment.Exit(0);
             }).Start();
+        }
+
+        protected override void OnClosed(EventArgs e)
+        {
+            base.OnClosed(e);
+            Environment.Exit(0);
         }
     }
 }
