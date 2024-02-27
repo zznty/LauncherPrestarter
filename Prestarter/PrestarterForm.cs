@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using System.Reflection;
 using System.Threading;
 using System.Windows.Forms;
 
@@ -20,6 +21,11 @@ namespace Prestarter
 
             Text = Config.Title;
             logoLabel.Text = Config.Project;
+
+            var appIcon = Icon.ExtractAssociatedIcon(Assembly.GetExecutingAssembly().Location);
+
+            Icon = appIcon;
+            logoPictureBox.BackgroundImage = appIcon.ToBitmap();
         }
 
         private void PreStartedForm_MouseUp(object sender, MouseEventArgs e)

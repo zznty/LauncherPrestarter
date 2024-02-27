@@ -68,6 +68,11 @@ public class PrestarterTask implements LauncherBuildTask, BuildExeMainTask {
         map.put("UseGlobalJava", Boolean.toString(module.config.useGlobalJava));
         map.put("DownloadJava", module.config.downloadJava);
 
+        var faviconPath = server.dir.resolve("favicon.ico");
+        if (Files.exists(faviconPath)) {
+            map.put("ApplicationIcon", faviconPath.normalize().toString());
+        }
+
         return map;
     }
 

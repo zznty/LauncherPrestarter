@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PrestarterForm));
             this.mainProgressBar = new System.Windows.Forms.ProgressBar();
             this.logoLabel = new System.Windows.Forms.Label();
             this.statusLabel = new System.Windows.Forms.Label();
@@ -44,6 +43,7 @@
             this.mainProgressBar.Size = new System.Drawing.Size(355, 15);
             this.mainProgressBar.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
             this.mainProgressBar.TabIndex = 0;
+            this.mainProgressBar.UseWaitCursor = true;
             // 
             // logoLabel
             // 
@@ -55,6 +55,7 @@
             this.logoLabel.Size = new System.Drawing.Size(236, 37);
             this.logoLabel.TabIndex = 1;
             this.logoLabel.Text = "GravitLauncher";
+            this.logoLabel.UseWaitCursor = true;
             // 
             // statusLabel
             // 
@@ -63,13 +64,13 @@
             this.statusLabel.Location = new System.Drawing.Point(137, 78);
             this.statusLabel.Margin = new System.Windows.Forms.Padding(0, 0, 2, 0);
             this.statusLabel.Name = "statusLabel";
-            this.statusLabel.Size = new System.Drawing.Size(96, 13);
+            this.statusLabel.Size = new System.Drawing.Size(108, 15);
             this.statusLabel.TabIndex = 2;
             this.statusLabel.Text = "Инициализация...";
+            this.statusLabel.UseWaitCursor = true;
             // 
             // logoPictureBox
             // 
-            this.logoPictureBox.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("logoPictureBox.BackgroundImage")));
             this.logoPictureBox.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.logoPictureBox.Location = new System.Drawing.Point(14, 14);
             this.logoPictureBox.Margin = new System.Windows.Forms.Padding(2);
@@ -89,10 +90,9 @@
             this.Controls.Add(this.logoLabel);
             this.Controls.Add(this.mainProgressBar);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
-            this.MinimizeBox = false;
-            this.MaximizeBox = false;
-            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(2);
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "PrestarterForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.UseWaitCursor = true;
