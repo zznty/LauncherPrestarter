@@ -42,6 +42,10 @@
   </ItemGroup>
 
   <ItemGroup>
+	  <EmbeddedResource Include="$(ApplicationIcon)" LogicalName="favicon.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Reference Include="System.IO.Compression" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Prestarter.Helpers;
+using System;
 using System.Drawing;
 using System.Reflection;
 using System.Threading;
@@ -22,8 +23,8 @@ namespace Prestarter
             Text = Config.Title;
             logoLabel.Text = Config.Project;
 
-            var appIcon = Icon.ExtractAssociatedIcon(Assembly.GetExecutingAssembly().Location);
-
+            var appIcon = IconResource.ExtractIcon();
+            
             Icon = appIcon;
             logoPictureBox.BackgroundImage = appIcon.ToBitmap();
         }
