@@ -17,7 +17,9 @@ namespace Prestarter
             InitializeComponent();
             WindowState = FormWindowState.Minimized;
             ShowInTaskbar = false;
+
             Text = Config.Title;
+            logoLabel.Text = Config.Project;
         }
 
         private void PreStartedForm_MouseUp(object sender, MouseEventArgs e)
@@ -90,7 +92,7 @@ namespace Prestarter
                 }
                 catch (Exception e)
                 {
-                    MessageBox.Show(e.Message, "GravitLauncher Prestarter", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show(e.Message, Config.Title, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
 
                 Environment.Exit(0);
