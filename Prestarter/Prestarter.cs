@@ -5,6 +5,7 @@ using System.IO;
 using System.Net;
 using System.Net.Http;
 using System.Reflection;
+using System.Text;
 using System.Windows.Forms;
 
 namespace Prestarter
@@ -153,6 +154,11 @@ namespace Prestarter
                 args += e.ToString();
                 args += "\"";
             }
+            StartJvm(javaPath, launcherPath, args);
+        }
+
+        private static void StartJvm(string javaPath, string launcherPath, string args)
+        {
             var process = new Process
             {
                 StartInfo = new ProcessStartInfo()
@@ -160,12 +166,33 @@ namespace Prestarter
                     FileName = Path.Combine(javaPath, "bin", "java.exe"),
                     Arguments = $"-Dlauncher.noJavaCheck=true -jar \"{launcherPath}\" {args}",
                     UseShellExecute = false,
-                    CreateNoWindow = true
+                    CreateNoWindow = true,
+                    RedirectStandardOutput = true,
+                    RedirectStandardError = true,
                 }
             };
+
+            var logBuilder = new StringBuilder();
+
+            logBuilder.Append("Starting ").AppendLine(process.StartInfo.FileName);
+            logBuilder.Append("Args ").AppendLine(process.StartInfo.Arguments);
+
+            process.OutputDataReceived += (_, e) => logBuilder.Append("0: ").AppendLine(e.Data);
+            process.ErrorDataReceived += (_, e) => logBuilder.Append("1: ").AppendLine(e.Data);
+
             process.Start();
+            process.BeginOutputReadLine();
+            process.BeginErrorReadLine();
+
             if (process.WaitForExit(500))
             {
+                using var log = new EventLog("Application")
+                {
+                    Source = "Application"
+                };
+
+                log.WriteEntry(logBuilder.ToString(), EventLogEntryType.Error);
+
                 throw new Exception("Процесс лаунчера закрылся слишком быстро");
             }
         }
