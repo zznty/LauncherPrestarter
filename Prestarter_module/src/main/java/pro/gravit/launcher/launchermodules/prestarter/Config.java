@@ -6,4 +6,6 @@ public class Config {
     public boolean downloadConfirmation = true;
     public boolean useGlobalJava = true;
     public String downloadJava = "adoptium-lts openjfx";
+
+    public boolean packJarAsExe = true;
 }

@@ -46,8 +46,13 @@ public class PrestarterTask implements LauncherBuildTask, BuildExeMainTask {
         Path outputPath = server.launcherEXEBinary.nextPath(getName());
         buildDotNet(projectPath, getProperties(outputPath.getParent()));
 
-        try (InputStream input = IOHelper.newInput(outputPath.getParent().resolve("Prestarter.exe"))) {
-            try (OutputStream output = IOHelper.newOutput(outputPath)) {
+        Path prestarterPath = outputPath.getParent().resolve("Prestarter.exe");
+
+        try(OutputStream output = IOHelper.newOutput(outputPath)) {
+            try(InputStream input = IOHelper.newInput(prestarterPath)) {
+                input.transferTo(output);
+            }
+            try(InputStream input = IOHelper.newInput(server.launcherBinary.syncBinaryFile)) {
                 input.transferTo(output);
             }
         }
@@ -63,7 +68,10 @@ public class PrestarterTask implements LauncherBuildTask, BuildExeMainTask {
         map.put("Configuration", "Release");
         map.put("OutDir", outputDir.normalize().toString());
 
-        map.put("LauncherUrl", server.config.netty.launcherURL);
+        if (!module.config.packJarAsExe) {
+            map.put("LauncherUrl", server.config.netty.launcherURL);
+        }
+
         map.put("DownloadConfirmation", Boolean.toString(module.config.downloadConfirmation));
         map.put("UseGlobalJava", Boolean.toString(module.config.useGlobalJava));
         map.put("DownloadJava", module.config.downloadJava);
