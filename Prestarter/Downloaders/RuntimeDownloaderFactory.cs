@@ -9,6 +9,7 @@ internal static class RuntimeDownloaderFactory
     private static readonly IRuntimeDownloader[] Downloaders = [
         new AdoptiumJavaDownloader(),
         new BellsoftJavaDownloader(),
+        new ZuluJavaDownloader(),
         new OpenJFXDownloader()
     ];
 
