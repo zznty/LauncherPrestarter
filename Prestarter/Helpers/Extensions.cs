@@ -12,6 +12,8 @@ namespace Prestarter.Helpers
         {
             using (var response = client.GetAsync(requestUri, HttpCompletionOption.ResponseHeadersRead).Result)
             {
+                response.EnsureSuccessStatusCode();
+
                 var contentLength = response.Content.Headers.ContentLength;
 
                 using (var download = response.Content.ReadAsStreamAsync().Result)
