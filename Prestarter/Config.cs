@@ -18,45 +18,37 @@ namespace Prestarter
         public static bool UseGlobalJava { get; } = true;
         public static IRuntimeDownloader JavaDownloader { get; } = new CompositeDownloader(new AdoptiumJavaDownloader(), new OpenJFXDownloader());
 
+#if !DEBUG
         static Config()
         {
-            foreach (var attribute in Assembly.GetExecutingAssembly().GetCustomAttributes())
+            var attributes = Assembly.GetExecutingAssembly().GetCustomAttributes();
+
+            var titleAttrbibute = attributes.OfType<AssemblyTitleAttribute>().FirstOrDefault();
+            Project = titleAttrbibute?.Title;
+
+            var versionAttribute = attributes.OfType<AssemblyInformationalVersionAttribute>().FirstOrDefault();
+            Version = versionAttribute?.InformationalVersion;
+
+            var prestarterConfigurationAttribute = attributes.OfType<PrestarterConfigurationAttribute>().FirstOrDefault();
+            LauncherDownloadUrl = prestarterConfigurationAttribute?.LauncherUrl;
+
+            var downloaderConfigurationAttribute = attributes.OfType<JavaDownloaderConfigurationAttribute>().FirstOrDefault();
+            DownloadQuestionEnabled = downloaderConfigurationAttribute?.DownloadConfirmation ?? DownloadQuestionEnabled;
+            UseGlobalJava = downloaderConfigurationAttribute?.UseGlobalJava ?? UseGlobalJava;
+
+            if (downloaderConfigurationAttribute?.JavaDownloaders == null)
+                return;
+
+            if (downloaderConfigurationAttribute.JavaDownloaders.Length == 1)
             {
-                switch (attribute)
-                {
-                    case AssemblyTitleAttribute titleAttribute:
-                    {
-                        Project = titleAttribute.Title;
-                        break;
-                    }
-                    case AssemblyInformationalVersionAttribute versionAttribute:
-                    {
-                        Version = versionAttribute.InformationalVersion;
-                        break;
-                    }
-                    case PrestarterConfigurationAttribute prestarterConfigurationAttribute:
-                    {
-                        LauncherDownloadUrl = prestarterConfigurationAttribute.LauncherUrl;
-                        break;
-                    }
-                    case JavaDownloaderConfigurationAttribute downloaderConfigurationAttribute:
-                    {
-                        DownloadQuestionEnabled = downloaderConfigurationAttribute.DownloadConfirmation;
-                        UseGlobalJava = downloaderConfigurationAttribute.UseGlobalJava;
-
-                        if (downloaderConfigurationAttribute.JavaDownloaders.Length == 1) 
-                        {
-                            JavaDownloader = RuntimeDownloaderFactory.GetById(downloaderConfigurationAttribute.JavaDownloaders[0]);
-                            break;
-                        }
-
-                        JavaDownloader = new CompositeDownloader(downloaderConfigurationAttribute.JavaDownloaders
-                                .Select(RuntimeDownloaderFactory.GetById)
-                                .ToArray());
-                        break;
-                    }
-                }
+                JavaDownloader = RuntimeDownloaderFactory.GetById(downloaderConfigurationAttribute.JavaDownloaders[0]);
+                return;
             }
+
+            JavaDownloader = new CompositeDownloader(downloaderConfigurationAttribute.JavaDownloaders
+                    .Select(RuntimeDownloaderFactory.GetById)
+                    .ToArray());
         }
+#endif
     }
 }
