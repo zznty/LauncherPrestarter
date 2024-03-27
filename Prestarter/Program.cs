@@ -1,8 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
-using System.Threading;
 using System.Windows.Forms;
-using System.Security.Policy;
+using Prestarter.Helpers;
 
 namespace Prestarter
 {
@@ -25,6 +24,7 @@ namespace Prestarter
         [STAThread]
         private static void Main()
         {
+            SatelliteAssembliesHook.Install();
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new PrestarterForm());

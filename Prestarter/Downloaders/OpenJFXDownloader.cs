@@ -1,10 +1,7 @@
 ﻿using Prestarter.Helpers;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Prestarter.Properties;
 
 namespace Prestarter.Downloaders
 {
@@ -21,7 +18,7 @@ namespace Prestarter.Downloaders
             var url = Environment.Is64BitOperatingSystem ? x64Url : x86Url;
             var name = GetName();
             string zipPath = Path.Combine(javaPath, "openjfx.zip");
-            reporter.SetStatus($"Скачивание {name}");
+            reporter.SetStatus(string.Format(Resources.JavaDownloader_Downloading, name));
             reporter.SetProgress(0);
             reporter.SetProgressBarState(ProgressBarState.Progress);
             using (var file = new FileStream(zipPath, FileMode.Create, FileAccess.Write, FileShare.None))
@@ -29,7 +26,7 @@ namespace Prestarter.Downloaders
                 Prestarter.SharedHttpClient.Download(url, file, reporter.SetProgress);
             }
             reporter.SetProgressBarState(ProgressBarState.Marqee);
-            reporter.SetStatus($"Распаковка {name}");
+            reporter.SetStatus(string.Format(Resources.JavaDownloader_Unpacking, name));
             DownloaderHelper.UnpackZip(zipPath, javaPath, true);
             File.Delete(zipPath);
         }

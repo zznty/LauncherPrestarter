@@ -1,0 +1,62 @@
+﻿<root>
+    <resheader name="resmimetype">
+        <value>text/microsoft-resx</value>
+    </resheader>
+    <resheader name="version">
+        <value>1.3</value>
+    </resheader>
+    <resheader name="reader">
+        <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <resheader name="writer">
+        <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <data name="BellsoftJavaDownloader_ApiRequestStart" xml:space="preserve">
+        <value>Performing request to Bellsoft API</value>
+    </data>
+    <data name="BellsoftJavaDownloader_ApiResponseProcessing" xml:space="preserve">
+        <value>Processing response from Bellsoft API</value>
+    </data>
+    <data name="JavaDownloader_ApiRequestException" xml:space="preserve">
+        <value>Initialization Error: The Server returned error code {0}</value>
+    </data>
+    <data name="JavaDownloader_ApiResponseProcessingException" xml:space="preserve">
+        <value>Exception occurred while parsing API response</value>
+    </data>
+    <data name="JavaDownloader_Downloading" xml:space="preserve">
+        <value>Downloading {0}</value>
+    </data>
+    <data name="JavaDownloader_RemovingOldJava" xml:space="preserve">
+        <value>Removing old Java</value>
+    </data>
+    <data name="JavaDownloader_Unpacking" xml:space="preserve">
+        <value>Unpacking {0}</value>
+    </data>
+    <data name="Prestarter_JavaDownloadPrompt" xml:space="preserve">
+        <value>Java software is required to run the Launcher {0}. Install {1}?</value>
+    </data>
+    <data name="Prestarter_JavaUpdatePrompt" xml:space="preserve">
+        <value>Java update is available. Proceed?</value>
+    </data>
+    <data name="Prestarter_StartJvm_ProcessExitedEarly" xml:space="preserve">
+        <value>The Launcher procees exited too early</value>
+    </data>
+    <data name="Prestarter_Step_Launch" xml:space="preserve">
+        <value>Launching</value>
+    </data>
+    <data name="Prestarter_Step_LauncherDownload" xml:space="preserve">
+        <value>Downloading the launcher</value>
+    </data>
+    <data name="Prestarter_Step_LauncherSearch" xml:space="preserve">
+        <value>Locating the launcher</value>
+    </data>
+    <data name="RuntimeDownloaderFactory_DownloaderNotFound" xml:space="preserve">
+        <value>Could not locate {0}</value>
+    </data>
+    <data name="ZuluJavaDownloader_ApiRequest" xml:space="preserve">
+        <value>Performing request to Azul API</value>
+    </data>
+    <data name="ZuluJavaDownloader_ApiResponseProcessing" xml:space="preserve">
+        <value>Processing response from Azul API</value>
+    </data>
+</root>

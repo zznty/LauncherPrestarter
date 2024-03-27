@@ -114,4 +114,52 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Prestarter_JavaUpdatePrompt" xml:space="preserve">
+    <value>Доступно обновление Java. Обновить?</value>
+  </data>
+  <data name="Prestarter_JavaDownloadPrompt" xml:space="preserve">
+    <value>Для запуска лаунчера {0} необходимо программное обеспечение Java. Скачать {1}?</value>
+  </data>
+  <data name="Prestarter_Step_LauncherSearch" xml:space="preserve">
+    <value>Поиск лаунчера</value>
+  </data>
+  <data name="Prestarter_Step_LauncherDownload" xml:space="preserve">
+    <value>Скачивание лаунчера</value>
+  </data>
+  <data name="Prestarter_Step_Launch" xml:space="preserve">
+    <value>Запуск</value>
+  </data>
+  <data name="JavaDownloader_Downloading" xml:space="preserve">
+    <value>Скачивание {0}</value>
+  </data>
+  <data name="JavaDownloader_RemovingOldJava" xml:space="preserve">
+    <value>Удаление старой Java</value>
+  </data>
+  <data name="JavaDownloader_Unpacking" xml:space="preserve">
+    <value>Распаковка {0}</value>
+  </data>
+  <data name="BellsoftJavaDownloader_ApiRequestStart" xml:space="preserve">
+    <value>Запрос к BellSoft API</value>
+  </data>
+  <data name="BellsoftJavaDownloader_ApiResponseProcessing" xml:space="preserve">
+    <value>Обработка ответа от BellSoft API</value>
+  </data>
+  <data name="JavaDownloader_ApiRequestException" xml:space="preserve">
+    <value>Произошла ошибка во время инициализации: сервер вернул код {0}</value>
+  </data>
+  <data name="JavaDownloader_ApiResponseProcessingException" xml:space="preserve">
+    <value>Произошла ошибка во время обработки ответа</value>
+  </data>
+  <data name="RuntimeDownloaderFactory_DownloaderNotFound" xml:space="preserve">
+    <value>Не удалось найти {0}</value>
+  </data>
+  <data name="ZuluJavaDownloader_ApiRequest" xml:space="preserve">
+    <value>Запрос к Azul API</value>
+  </data>
+  <data name="ZuluJavaDownloader_ApiResponseProcessing" xml:space="preserve">
+    <value>Обработка ответа от Azul API</value>
+  </data>
+  <data name="Prestarter_StartJvm_ProcessExitedEarly" xml:space="preserve">
+    <value>Процесс лаунчера закрылся слишком быстро</value>
+  </data>
 </root>

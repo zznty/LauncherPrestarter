@@ -1,6 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
+using Prestarter.Properties;
 
 namespace Prestarter.Downloaders;
 
@@ -16,6 +16,6 @@ internal static class RuntimeDownloaderFactory
     public static IRuntimeDownloader GetById(string id) 
     {
         return Downloaders.FirstOrDefault(x => x.GetDirectoryPrefix() == id) ?? 
-            throw new KeyNotFoundException($"Не удалось найти {id}");
+            throw new KeyNotFoundException(string.Format(Resources.RuntimeDownloaderFactory_DownloaderNotFound, id));
     }
 }

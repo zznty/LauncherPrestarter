@@ -1,11 +1,7 @@
 ﻿using Prestarter.Helpers;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Security.Policy;
-using System.Text;
-using System.Threading.Tasks;
+using Prestarter.Properties;
 
 namespace Prestarter.Downloaders
 {
@@ -22,7 +18,7 @@ namespace Prestarter.Downloaders
             var url = Environment.Is64BitOperatingSystem ? x64Url : x86Url;
             var name = GetName();
             var zipPath = Path.Combine(javaPath, "java.zip");
-            reporter.SetStatus($"Скачивание {name}");
+            reporter.SetStatus(string.Format(Resources.JavaDownloader_Downloading, name));
             reporter.SetProgress(0);
             reporter.SetProgressBarState(ProgressBarState.Progress);
             using (var file = new FileStream(zipPath, FileMode.Create, FileAccess.Write, FileShare.None))
@@ -32,10 +28,10 @@ namespace Prestarter.Downloaders
             reporter.SetProgressBarState(ProgressBarState.Marqee);
             if (File.Exists(javaPath))
             {
-                reporter.SetStatus("Удаление старой Java");
+                reporter.SetStatus(Resources.JavaDownloader_RemovingOldJava);
                 Directory.Delete(javaPath, true);
             }
-            reporter.SetStatus($"Распаковка {name}");
+            reporter.SetStatus(string.Format(Resources.JavaDownloader_Unpacking, name));
             Directory.CreateDirectory(javaPath);
             DownloaderHelper.UnpackZip(zipPath, javaPath, true);
             File.Delete(zipPath);

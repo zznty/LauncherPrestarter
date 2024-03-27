@@ -39,6 +39,10 @@
 
   <ItemGroup>
 	  <EmbeddedResource Include="$(ApplicationIcon)" LogicalName="favicon.ico" />
+	  <EmbeddedResource Update="Properties\Resources.resx">
+        <Generator>ResXFileCodeGenerator</Generator>
+        <SubType>Designer</SubType>
+	  </EmbeddedResource>
   </ItemGroup>
 
   <ItemGroup>
@@ -60,5 +64,25 @@
     </PackageReference>
     <PackageReference Include="System.Resources.Extensions" Version="6.0.0" />
   </ItemGroup>
+  
+  <ItemGroup Condition=" '$(IgnoreRecursion)' == 'true' ">
+    <ResourcesToEmbed Include="$(OutputPath)\**\*resources.dll" />
+    <EmbeddedResource Include="@(ResourcesToEmbed)">
+      <LogicalName>$([System.String]::new('%(RecursiveDir)').Replace('\','/'))%(Filename)%(Extension)</LogicalName>
+    </EmbeddedResource>
+  </ItemGroup>
+  
+  <Target Condition=" '$(IgnoreRecursion)' == 'true' " Name="CleanupSatelliteAssemblies" AfterTargets="Build">
+    <Delete Files="@(ResourcesToEmbed)" />
+
+    <ItemGroup>
+      <_Directories Include="$([System.IO.Path]::GetDirectoryName('%(ResourcesToEmbed.Identity)'))\" />
+    </ItemGroup>
+    <RemoveDir Directories="@(_Directories)" />
+  </Target>
+
+  <Target Condition=" '$(IgnoreRecursion)' != 'true' " Name="Embedder" AfterTargets="Build">
+    <MSBuild Projects="$(ProjectPath)" Targets="Build" Properties="Configuration=$(Configuration);IgnoreRecursion=true" />
+  </Target>
 
 </Project>

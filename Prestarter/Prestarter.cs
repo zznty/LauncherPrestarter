@@ -1,12 +1,14 @@
 ﻿using Prestarter.Helpers;
 using System;
 using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 using System.Net;
 using System.Net.Http;
 using System.Reflection;
 using System.Text;
 using System.Windows.Forms;
+using Prestarter.Properties;
 
 namespace Prestarter
 {
@@ -30,7 +32,7 @@ namespace Prestarter
                     return JavaStatus.NotInstalled;
                 }
                 var text = File.ReadAllText(path);
-                var parsed = DateTime.Parse(text);
+                var parsed = DateTime.Parse(text, CultureInfo.InvariantCulture);
                 var now = DateTime.Now;
                 if (parsed.AddDays(30) < now)
                 {
@@ -53,42 +55,38 @@ namespace Prestarter
 
         private string VerifyAndDownloadJava(string basePath)
         {
-            var appData = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
-
-            string javaPath;
-            if (Config.Current.UseGlobalJava)
-            {
-                javaPath = Path.Combine(appData, "GravitLauncherStore", "Java", Config.Current.JavaDownloader.GetDirectoryPrefix());
-            }
-            else
-            {
-                javaPath = Path.Combine(basePath, "jre-full");
-            }
+            var javaPath = Config.Current.UseGlobalJava
+                ? Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
+                    "GravitLauncherStore", "Java", Config.Current.JavaDownloader.GetDirectoryPrefix())
+                : Path.Combine(basePath, "jre-full");
             Directory.CreateDirectory(javaPath);
 
             var dateFilePath = Path.Combine(javaPath, "date-updated");
             var javaStatus = CheckJavaUpdateDate(dateFilePath);
+            
             if (javaStatus == JavaStatus.Ok)
             {
                 return javaPath;
             }
+            
             if (Config.Current.DownloadQuestionEnabled)
             {
                 if (javaStatus == JavaStatus.NeedUpdate)
                 {
-                    var dialog = MessageBox.Show("Доступно обновление Java. Обновить?", Config.Current.Title, MessageBoxButtons.YesNoCancel);
+                    var dialog = MessageBox.Show(Resources.Prestarter_JavaUpdatePrompt, Config.Current.Title, MessageBoxButtons.YesNoCancel);
                     if (dialog == DialogResult.No)
                     {
                         return javaPath;
                     }
-                    else if (dialog == DialogResult.Cancel)
+
+                    if (dialog == DialogResult.Cancel)
                     {
                         return null;
                     }
                 }
                 else
                 {
-                    var dialog = MessageBox.Show($"Для запуска лаунчера {Config.Current.Project} необходимо программное обеспечение Java. Скачать {Config.Current.JavaDownloader.GetName()}?", 
+                    var dialog = MessageBox.Show(string.Format(Resources.Prestarter_JavaDownloadPrompt, Config.Current.Project, Config.Current.JavaDownloader.GetName()), 
                         Config.Current.Title, MessageBoxButtons.OKCancel);
                     if (dialog != DialogResult.OK)
                     {
@@ -96,18 +94,11 @@ namespace Prestarter
                     }
                 }
             }
-            else
-            {
-                if(javaStatus == JavaStatus.Ok)
-                {
-                    return javaPath;
-                }
-            }
 
             reporter.ShowForm();
             Config.Current.JavaDownloader.Download(javaPath, reporter);
 
-            File.WriteAllText(dateFilePath, DateTime.Now.ToString());
+            File.WriteAllText(dateFilePath, DateTime.Now.ToString(CultureInfo.InvariantCulture));
             return javaPath;
         }
 
@@ -115,7 +106,7 @@ namespace Prestarter
         {
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
 
-            var appData = Environment.GetEnvironmentVariable("APPDATA");
+            var appData = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
 
             var basePath = Path.Combine(appData, Config.Current.Project);
             Directory.CreateDirectory(basePath);
@@ -126,7 +117,7 @@ namespace Prestarter
                 return;
             }
 
-            reporter.SetStatus("Поиск лаунчера");
+            reporter.SetStatus(Resources.Prestarter_Step_LauncherSearch);
             var launcherPath = Path.Combine(basePath, "Launcher.jar");
 
             if (Config.Current.LauncherDownloadUrl == null)
@@ -136,7 +127,7 @@ namespace Prestarter
             else if (!File.Exists(launcherPath))
             {
                 reporter.ShowForm();
-                reporter.SetStatus("Скачивание лаунчера");
+                reporter.SetStatus(Resources.Prestarter_Step_LauncherDownload);
                 reporter.SetProgress(0);
                 reporter.SetProgressBarState(ProgressBarState.Progress);
                 using (var file = new FileStream(launcherPath, FileMode.Create, FileAccess.Write, FileShare.None))
@@ -146,7 +137,7 @@ namespace Prestarter
                 reporter.SetProgressBarState(ProgressBarState.Marqee);
             }
 
-            reporter.SetStatus("Запуск");
+            reporter.SetStatus(Resources.Prestarter_Step_Launch);
             
             var args = new StringBuilder();
             foreach (var e in Environment.GetCommandLineArgs())
@@ -193,7 +184,7 @@ namespace Prestarter
 
             log.WriteEntry(logBuilder.ToString(), EventLogEntryType.Error);
 
-            throw new("Процесс лаунчера закрылся слишком быстро");
+            throw new(Resources.Prestarter_StartJvm_ProcessExitedEarly);
         }
     }
 }
