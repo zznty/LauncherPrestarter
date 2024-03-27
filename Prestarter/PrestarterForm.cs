@@ -20,8 +20,8 @@ namespace Prestarter
             WindowState = FormWindowState.Minimized;
             ShowInTaskbar = false;
 
-            Text = Config.Title;
-            logoLabel.Text = Config.Project;
+            Text = Config.Current.Title;
+            logoLabel.Text = Config.Current.Project;
 
             var appIcon = IconResource.ExtractIcon();
             
@@ -99,7 +99,7 @@ namespace Prestarter
                 }
                 catch (Exception e)
                 {
-                    MessageBox.Show(e.Message, Config.Title, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show(e.Message, Config.Current.Title, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
 
                 Environment.Exit(0);

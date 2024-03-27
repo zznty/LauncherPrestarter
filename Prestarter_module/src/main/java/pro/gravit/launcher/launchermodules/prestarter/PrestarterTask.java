@@ -63,9 +63,10 @@ public class PrestarterTask implements LauncherBuildTask, BuildExeMainTask {
     private Map<String, String> getProperties(Path outputDir) {
         var map = new HashMap<String, String>();
 
-        map.put("AssemblyTitle", server.config.projectName);
+        map.put("Title", server.config.projectName);
         map.put("Version", Version.getVersion().getVersionString());
         map.put("Configuration", "Release");
+        map.put("Launch4jMode", "true");
         map.put("OutDir", outputDir.normalize().toString());
 
         if (!module.config.packJarAsExe) {

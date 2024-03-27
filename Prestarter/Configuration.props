@@ -1,0 +1,30 @@
+﻿<Project>
+    <!-- Branding -->
+    <PropertyGroup>
+        <Product>Launcher Prestarter</Product>
+        <Company>GravitLauncher</Company>
+        <Copyright>Copyright © GravitLauncher Team 2024</Copyright>
+        
+        <Title>Minecraft</Title>
+        <Version>0.0.0-dev</Version>
+        
+        <!-- Path to the main icon, based on the directory of Prestarter.csproj -->
+        <ApplicationIcon>favicon.ico</ApplicationIcon>
+    </PropertyGroup>
+    
+    <!-- General Configuration -->
+    <PropertyGroup Condition=" '$(Launch4jMode)' != 'true' ">
+        <!-- Url to download Launcher.jar from -->
+        <LauncherUrl>https://demo.gravit-support.ru/updates/Launcher.jar</LauncherUrl>
+        
+        <!-- Java downloader configuration -->
+        <!-- Currently available 'adoptium-lts openjfx', 'bellsoft-lts', 'zulu' -->
+        <DownloadJava>adoptium-lts openjfx</DownloadJava>
+        
+        <!-- Ask for download confirmation -->
+        <DownloadConfirmation>true</DownloadConfirmation>
+        
+        <!-- Store java in shared place instead of per project folders -->
+        <UseGlobalJava>true</UseGlobalJava>
+    </PropertyGroup>
+</Project>

@@ -2,23 +2,19 @@
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
     <TargetFramework>net461</TargetFramework>
-    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <UseWinForms>true</UseWinForms>
     <GenerateResourceUsePreserializedResources>true</GenerateResourceUsePreserializedResources>
     <GenerateSupportedRuntime>false</GenerateSupportedRuntime>
     <AutoGenerateBindingRedirects>false</AutoGenerateBindingRedirects>
     <LangVersion>12</LangVersion>
-  </PropertyGroup>
-
-  <PropertyGroup>
-    <Product>Launcher Prestarter</Product>
-    <Company>GravitLauncher</Company>
-    <Copyright>Copyright © GravitLauncher Team 2024</Copyright>
-    <NeutralLanguage>ru-RU</NeutralLanguage>
-    <AssemblyTitle>Minecraft</AssemblyTitle>
-    <Version>0.0.0-dev</Version>
     <IncludeSourceRevisionInInformationalVersion>false</IncludeSourceRevisionInInformationalVersion>
-	<ApplicationIcon>favicon.ico</ApplicationIcon>
+  </PropertyGroup>
+  
+  <Import Project="Configuration.props" />
+  
+  <PropertyGroup>
+    <AssemblyTitle>$(Title)</AssemblyTitle>
+    <NeutralLanguage>ru-RU</NeutralLanguage>
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">

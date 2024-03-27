@@ -7,19 +7,20 @@ namespace Prestarter
 {
     internal class Config
     {
-        public static string Title => $"{Project} Launcher Prestarter v{Version}";
-        public static string Project { get; } = "Minecraft";
-        public static string Version { get; } = "0.0.0-dev";
+        public static Config Current { get; } = new();
+        public string Title => $"{Project} Launcher Prestarter v{Version}";
+        public string Project { get; }
+        public string Version { get; }
 
-        public static string LauncherDownloadUrl { get; } = "https://demo.gravit-support.ru/updates/Launcher.jar";
+        public string LauncherDownloadUrl { get; }
         
-        public static bool DownloadQuestionEnabled { get; } = true;
+        public bool DownloadQuestionEnabled { get; }
         
-        public static bool UseGlobalJava { get; } = true;
-        public static IRuntimeDownloader JavaDownloader { get; } = new CompositeDownloader(new AdoptiumJavaDownloader(), new OpenJFXDownloader());
+        public bool UseGlobalJava { get; }
+        public IRuntimeDownloader JavaDownloader { get; }
 
 #if !DEBUG
-        static Config()
+        private Config()
         {
             var attributes = Assembly.GetExecutingAssembly().GetCustomAttributes();
 
@@ -48,6 +49,16 @@ namespace Prestarter
             JavaDownloader = new CompositeDownloader(downloaderConfigurationAttribute.JavaDownloaders
                     .Select(RuntimeDownloaderFactory.GetById)
                     .ToArray());
+        }
+#else
+        private Config()
+        {
+            Project = "Minecraft";
+            Version = "0.0.0-dev";
+            LauncherDownloadUrl = "https://demo.gravit-support.ru/updates/Launcher.jar";
+            DownloadQuestionEnabled = true;
+            UseGlobalJava = true;
+            JavaDownloader = new CompositeDownloader(new AdoptiumJavaDownloader(), new OpenJFXDownloader());
         }
 #endif
     }
