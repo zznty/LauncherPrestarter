@@ -10,7 +10,7 @@ namespace Prestarter.Downloaders
         private const string x64Name = "OpenJFX 21 (x86_64)";
         private const string x86Name = "OpenJFX 17 (x86)";
 
-        private const string x64Url = "https://download2.gluonhq.com/openjfx/21.0.1/openjfx-21.0.1_windows-x64_bin-sdk.zip";
+        private const string x64Url = "https://download2.gluonhq.com/openjfx/22/openjfx-22_windows-x64_bin-sdk.zip";
         private const string x86Url = "https://download2.gluonhq.com/openjfx/17.0.8/openjfx-17.0.8_windows-x86_bin-sdk.zip";
 
         public void Download(string javaPath, IUIReporter reporter)
