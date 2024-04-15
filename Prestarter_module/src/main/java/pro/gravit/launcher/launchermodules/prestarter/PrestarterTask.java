@@ -67,7 +67,7 @@ public class PrestarterTask implements LauncherBuildTask, BuildExeMainTask {
         map.put("Version", Version.getVersion().getVersionString());
         map.put("Configuration", "Release");
         map.put("Launch4jMode", "true");
-        map.put("OutDir", outputDir.normalize().toString());
+        map.put("OutputPath", outputDir.normalize().toString());
 
         if (!module.config.packJarAsExe) {
             map.put("LauncherUrl", server.config.netty.launcherURL);
